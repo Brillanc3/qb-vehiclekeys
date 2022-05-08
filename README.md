@@ -1,5 +1,5 @@
 # qb-vehiclekeys
-Vehicle Keys System For QB-Core
+Vehicle Keys System For QB-Core etided by Brillance for work with https://fivem-mods.tebex.io/package/4499436
 
 # License
 
