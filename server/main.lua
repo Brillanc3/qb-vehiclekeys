@@ -123,6 +123,14 @@ function LoadKeysFromFile()
     end
 end
 
+function Trim(value)
+	if value then
+		return (string.gsub(value, "^%s*(.-)%s*$", "%1"))
+	else
+		return nil
+	end
+end
+
 -- save keys when server reboots
 AddEventHandler('txAdmin:events:scheduledRestart', function(eventData)
     if eventData.secondsRemaining == 60 then
@@ -136,6 +144,20 @@ end)
 -- remove key when vehicle is unregistered
 RegisterServerEvent('persistent-vehicles/server/forget-vehicle')
 AddEventHandler("persistent-vehicles/server/forget-vehicle", function(plate)
+    if VehicleList ~= nil then
+        for k, val in pairs(VehicleList) do
+            if val.plate == plate then
+                VehicleList[k] = nil
+                break
+            end
+        end
+    end
+end)
+
+RegisterServerEvent('persistent-vehicles/server/delete-vehicle-by-netId')
+AddEventHandler("persistent-vehicles/server/delete-vehicle-by-netId", function(netId)
+    local entity = NetworkGetEntityFromNetworkId(netId)
+    local plate = Trim(GetVehicleNumberPlateText(entity))
     if VehicleList ~= nil then
         for k, val in pairs(VehicleList) do
             if val.plate == plate then
